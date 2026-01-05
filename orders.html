@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pizza Orders</title>
+ <link rel="stylesheet" href="orders.css" />
+
+</head>
+<body>
+  <div class="app-layout">
+
+    <!-- Header -->
+    <header class="app-header">
+      <div id="user-info"></div>
+      <button id="logout-btn">Logout</button>
+    </header>
+
+    <div class="app-body">
+
+      <!-- Left: Order history -->
+      <aside class="orders-history">
+        <h3>Order History</h3>
+        <div id="orders"></div>
+      </aside>
+
+      <!-- Main: Menu -->
+      <main class="menu-area">
+        <h2>Menu</h2>
+        <div id="menu-grid" class="menu-grid"></div>
+
+        <div class="cart">
+          <h3>Current Order</h3>
+          <div id="cart"></div>
+          <button id="confirm-order">Confirm Order</button>
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+  <script type="module" src="orders.js"></script>
+</body>
+</html>
