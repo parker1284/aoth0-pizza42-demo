@@ -1,4 +1,5 @@
 import { createAuth0Client } from "@auth0/auth0-spa-js";
+const API_URL = import.meta.env.VITE_API_URL;
 
 let auth0Client;
 let cart = [];
