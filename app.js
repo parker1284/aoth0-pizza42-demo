@@ -2,6 +2,7 @@ import { createAuth0Client } from '@auth0/auth0-spa-js';
 
 console.log("DOMAIN:", import.meta.env.VITE_AUTH0_DOMAIN);
 console.log("CLIENT ID:", import.meta.env.VITE_AUTH0_CLIENT_ID);
+console.log("VITE_API_URL:", import.meta.env.VITE_API_URL);
 
 
 // DOM elements
@@ -18,6 +19,8 @@ const ordersContainer = document.getElementById('orders');
 
 const orderBtn = document.getElementById('order-btn');
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 let auth0Client;
 
 // Initialize Auth0 client
@@ -28,7 +31,7 @@ async function initAuth0() {
   clientId: import.meta.env.VITE_AUTH0_CLIENT_ID,
   cacheLocation: "localstorage",   // 👈 CLAVE
   authorizationParams: {
-    audience: "http://localhost:3000",
+    audience: import.meta.env.VITE_API_URL,
     redirect_uri: window.location.origin
   }
 });
@@ -136,11 +139,11 @@ async function createOrder() {
     // Obtener access token
     const token = await auth0Client.getTokenSilently({
   authorizationParams: {
-    audience: "http://localhost:3000"
+    audience: import.meta.env.VITE_API_URL
   }
 });
     // Llamar a tu backend
-    const response = await fetch("http://localhost:3000/orders", {
+    const response = await fetch(`${API_URL}/orders`, {
   method: "POST",
   headers: {
     Authorization: `Bearer ${token}`,
@@ -164,11 +167,11 @@ async function loadOrders() {
   try {
     const token = await auth0Client.getTokenSilently({
       authorizationParams: {
-        audience: "http://localhost:3000"
+        audience: import.meta.env.VITE_API_URL
       }
     });
 
-    const response = await fetch("http://localhost:3000/orders", {
+    const response = await fetch(`${API_URL}/orders`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

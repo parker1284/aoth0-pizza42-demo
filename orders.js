@@ -14,7 +14,7 @@ async function init() {
   clientId: import.meta.env.VITE_AUTH0_CLIENT_ID,
   cacheLocation: "localstorage",   
   authorizationParams: {
-    audience: "http://localhost:3000",
+    audience: import.meta.env.VITE_API_URL,
     redirect_uri: window.location.origin + "/orders.html"
   }
 });
@@ -59,10 +59,10 @@ async function loadUser() {
 
 async function loadOrders() {
   const token = await auth0Client.getTokenSilently({
-    authorizationParams: { audience: "http://localhost:3000" }
+    authorizationParams: { audience: import.meta.env.VITE_API_URL }
   });
 
-  const res = await fetch("http://localhost:3000/orders", {
+  const res = await fetch(`${API_URL}/orders`, {
     headers: { Authorization: `Bearer ${token}` }
   });
 
@@ -138,10 +138,10 @@ if (!currentUser.email_verified) {
 
 
   const token = await auth0Client.getTokenSilently({
-    authorizationParams: { audience: "http://localhost:3000" }
+    authorizationParams: { audience: import.meta.env.VITE_API_URL }
   });
 
-  await fetch("http://localhost:3000/orders", {
+  await fetch(`${API_URL}/orders`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
