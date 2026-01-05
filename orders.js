@@ -1,5 +1,9 @@
 import { createAuth0Client } from "@auth0/auth0-spa-js";
 const API_URL = import.meta.env.VITE_API_URL;
+const API_AUDIENCE = import.meta.env.VITE_AUTH0_API_AUDIENCE;
+
+console.log("API URL:", API_URL);
+console.log("API AUDIENCE:", API_AUDIENCE);
 
 let auth0Client;
 let cart = [];
@@ -15,7 +19,7 @@ async function init() {
   clientId: import.meta.env.VITE_AUTH0_CLIENT_ID,
   cacheLocation: "localstorage",   
   authorizationParams: {
-    audience: import.meta.env.VITE_API_URL,
+    audience: API_AUDIENCE,
     redirect_uri: window.location.origin + "/orders.html"
   }
 });
@@ -60,7 +64,7 @@ async function loadUser() {
 
 async function loadOrders() {
   const token = await auth0Client.getTokenSilently({
-    authorizationParams: { audience: import.meta.env.VITE_API_URL }
+    authorizationParams: { audience: API_AUDIENCE }
   });
 
   const res = await fetch(`${API_URL}/orders`, {
@@ -139,7 +143,7 @@ if (!currentUser.email_verified) {
 
 
   const token = await auth0Client.getTokenSilently({
-    authorizationParams: { audience: import.meta.env.VITE_API_URL }
+    authorizationParams: { audience: API_AUDIENCE }
   });
 
   await fetch(`${API_URL}/orders`, {
